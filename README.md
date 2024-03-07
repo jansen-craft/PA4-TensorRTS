@@ -1,10 +1,12 @@
-# PA$ - TensorRTS game
+# PA4 - TensorRTS game
+
+![Game Board](media/game-board.png)
 
 ### Setup
 ```
 conda create -y -n ENN python=3.8 &&
 conda activate ENN &&
-pip install enn_trainer torch torch_scatter
+pip install enn_trainer torch torch_scatter colorama
 ```
 
 ### Note: load model
