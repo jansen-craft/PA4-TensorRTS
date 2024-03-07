@@ -1,3 +1,5 @@
 runs
 checkpoints
 __pycache__
+Results.txt
+wandb
