@@ -4,9 +4,15 @@
 
 ### Setup
 ```
-conda create -y -n ENN python=3.8 &&
-conda activate ENN &&
-pip install enn_trainer torch torch_scatter colorama
+conda create -y -n ENN python=3.8
+```
+Here you have to open a new terminal
+```
+conda activate ENN
+pip install enn_trainer
+pip install torch
+pip install torch_scatter
+pip install colorama
 ```
 
 ### Note: load model
