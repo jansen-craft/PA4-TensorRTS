@@ -12,21 +12,13 @@ from TensorRTS import Agent
 from enn_trainer import load_checkpoint, RogueNetAgent
 
 class SwagBot(Agent):
-    def __init__(self, init_observation : Observation, action_space : Dict[ActionName, ActionSpace], bot_dir="swag_checkpoint") -> None: 
+    def __init__(self, init_observation : Observation, action_space : Dict[ActionName, ActionSpace]) -> None: 
         super().__init__(init_observation, action_space)
-        checkpoint = load_checkpoint(bot_dir)
-        self.agent = RogueNetAgent(checkpoint.state.agent)
+        checkpoint = load_checkpoint("./checkpoint")
+        self.current = RogueNetAgent(checkpoint.state.agent)
 
     def take_turn(self, current_game_state : Observation) -> Mapping[ActionName, Action]:
-        mapping = {}
-
-        action_choice = random.randrange(0, 2)
-        if (action_choice == 1): 
-            mapping['Move'] = GlobalCategoricalAction(0, self.action_space['Move'].index_to_label[0])
-        else: 
-            mapping["Move"] = GlobalCategoricalAction(1, self.action_space['Move'].index_to_label[1])
-        
-        return mapping
+        return self.current.act(Observation)
     
     def on_game_start(self) -> None:
         return super().on_game_start()
@@ -35,11 +27,6 @@ class SwagBot(Agent):
         return super().on_game_over(did_i_win, did_i_tie)
     
 def agent_hook(init_observation : Observation, action_space : Dict[ActionName, ActionSpace]) -> Agent: 
-    """Creates an agent of this type
-
-    Returns:
-        Agent: _description_
-    """
     return SwagBot(init_observation, action_space)
 
 def student_name_hook() -> str: 
