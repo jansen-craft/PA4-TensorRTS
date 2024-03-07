@@ -20,3 +20,12 @@ To generate the model, run the training this way:
 ```bash
 python train.py --config=config.ron --checkpoint-dir=checkpoints
 ```
+
+### SwagBot
+
+Once you have an initial checkpoint in this swag_bot/checkpoint directory, you can run this:
+```
+python train.py --config=./bots/swag_bot/checkpoint/config.ron --checkpoint-dir=./bots/swag_bot/checkpoint/
+```
+
+After running this, move the swag_bot/checkpoint/[automatic-checkpoint-name] up into checkpoint and you can run it again.
