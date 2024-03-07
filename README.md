@@ -29,3 +29,10 @@ python train.py --config=./bots/swag_bot/checkpoint/config.ron --checkpoint-dir=
 ```
 
 After running this, move the swag_bot/checkpoint/[automatic-checkpoint-name] up into checkpoint and you can run it again.
+
+#### Method
+
+I simply used the basic enn with a random-ai
+
+![training](./media/training.png)
+
