@@ -32,9 +32,13 @@ After running this, move the swag_bot/checkpoint/[automatic-checkpoint-name] up 
 
 #### Method
 
-I simply used the basic enn with a random-ai
-I've built a new UI for the game - only seems to work on manual gui playthroughs.
+I simply used the basic enn with a random-ai.
+
+I've built a new UI for the game - Though only seems to work on manual gui playthroughs.
+
 I've coped and trained the base random ai bot and done some reworking with how the checkpoint is saved so I dont need to do as much each time to load in the renamed bot.
+
+It now uploads to my wandb page.
 
 ![training](./media/training.png)
 
