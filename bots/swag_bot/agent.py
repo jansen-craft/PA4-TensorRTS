@@ -14,11 +14,11 @@ from enn_trainer import load_checkpoint, RogueNetAgent
 class SwagBot(Agent):
     def __init__(self, init_observation : Observation, action_space : Dict[ActionName, ActionSpace]) -> None: 
         super().__init__(init_observation, action_space)
-        checkpoint = load_checkpoint("./checkpoint")
+        checkpoint = load_checkpoint("bots/swag_bot/checkpoint")
         self.current = RogueNetAgent(checkpoint.state.agent)
 
     def take_turn(self, current_game_state : Observation) -> Mapping[ActionName, Action]:
-        return self.current.act(Observation)
+        return self.current.act(current_game_state)[0]
     
     def on_game_start(self) -> None:
         return super().on_game_start()
