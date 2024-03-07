@@ -43,9 +43,4 @@ def agent_hook(init_observation : Observation, action_space : Dict[ActionName, A
     return SwagBot(init_observation, action_space)
 
 def student_name_hook() -> str: 
-    """Provide the name of the student as a string
-
-    Returns:
-        str: Name of student
-    """
-    return 'My Name_1'
+    return 'Jansen'
