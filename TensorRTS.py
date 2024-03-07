@@ -5,11 +5,10 @@ from entity_gym.env import Observation
 
 from entity_gym.runner import CliRunner
 from entity_gym.env import *
+from colorama import Fore, Back, Style
 
 class TensorRTS(Environment):
-    """
-LinearRTS, the first epoch of TensorRTS, is intended to be the simplest RTS game.
-    """
+    """LinearRTS, the first epoch of TensorRTS, is intended to be the simplest RTS game."""
 
     def __init__(
         self,
@@ -17,7 +16,7 @@ LinearRTS, the first epoch of TensorRTS, is intended to be the simplest RTS game
         nclusters: int = 6,
         ntensors: int = 2,
         maxdots: int = 9,
-        enable_prinouts : bool = True
+        enable_prinouts : bool = False
     ):
         self.enable_printouts = enable_prinouts
         
@@ -153,34 +152,71 @@ LinearRTS, the first epoch of TensorRTS, is intended to be the simplest RTS game
                 high = mid - 1
 
         return 0        
-
+    
     def print_universe(self):
         #    print(self.clusters)
         #    print(self.tensors)
-        for j in range(self.mapsize):
-            print(f" {j%10}", end="")
-        print(" #")
-        position_init = 0
-        for i in range(len(self.clusters)):
-            for j in range(position_init, self.clusters[i][0]):
-                print("  ", end="")
-            print(f" {self.clusters[i][1]}", end="")
-            position_init = self.clusters[i][0]+1
-        for j in range(position_init, self.mapsize):
-            print("  ", end="")
-        print(" ##")
+        
+        print(Fore.BLUE, end="")
+        for j in range(self.mapsize*2) :
+            print("─", end="")
+        print(Fore.RESET + "─" + Fore.RED, end="")
+        for j in range(self.mapsize*2) :
+            print("─", end="")
+        print(Fore.RESET)
 
-        position_init = 0
-        for i in range(len(self.tensors)):
-            for j in range(position_init, self.tensors[i][0]):
-                print("  ", end="")
-            print(f"{self.tensors[i][2]}", end="")
-            if self.tensors[i][3]>=0:
-                print(f"-{self.tensors[i][3]}", end="")
-            position_init = self.tensors[i][0]+1
-        for j in range(position_init, self.mapsize):
-            print("  ", end="")
-        print(" ##")
+
+        # Board indexes
+        for j in range(self.mapsize):
+            print(f" {j:>2} ", end="")
+        print("")
+
+        # Top
+        print("┌─",end="")
+        for j in range(self.mapsize-1):
+            print(f"──┬─", end="")
+        print("──┐")
+
+        # Middle
+        print("│ ",end="")
+        cluster_idx = 0
+        # forgive me for this
+        for i in range(self.mapsize):
+            if i == self.tensors[0][0]:
+                print(Fore.BLUE + f"●" + Fore.RESET,end="")
+                if (i == self.clusters[cluster_idx][0]): cluster_idx += 1
+            elif i == self.tensors[1][0]:
+                print(Fore.RED + f"●" + Fore.RESET,end="")
+                if (i == self.clusters[cluster_idx][0]): cluster_idx += 1
+            elif i == self.clusters[cluster_idx][0]:
+                print(f"{self.clusters[cluster_idx][1]}",end="")
+                if cluster_idx < len(self.clusters)-1:
+                    cluster_idx += 1
+            else:
+                print(" ",end="")
+            print(" │ ",end="")
+        print("")
+
+        # Bottom
+        print("└─",end="")
+        for j in range(self.mapsize-1):
+            print(f"──┴─", end="")
+        print("──┘\n")
+
+        print("Pos\tDim\tx\ty\tMP")
+
+        print(Fore.BLUE + Style.BRIGHT,end="")
+        for i in range(len(self.tensors[0])):
+            print(f"{self.tensors[0][i]}\t", end="")
+        print(f"{self.tensors[0][2]*self.tensors[0][2]+self.tensors[0][3]}\t", end="")
+        print(Fore.RESET+Style.RESET_ALL)
+
+        print(Fore.RED + Style.BRIGHT,end="")
+        for i in range(len(self.tensors[1])):
+            print(f"{self.tensors[1][i]}\t", end="")
+        print(f"{self.tensors[1][2]*self.tensors[1][2]+self.tensors[1][3]}\t", end="")
+        print(Fore.RESET+Style.RESET_ALL+"\n\n")
+        
 
 class Interactive_TensorRTS(TensorRTS): 
     def __init__(self,
@@ -323,3 +359,10 @@ if __name__ == "__main__":  #this is to run cli
     env = TensorRTS()
     # The `CliRunner` can run any environment with a command line interface.
     CliRunner(env).run()    
+
+# if __name__ == "__main__":  #this is to my agent
+#     env = TensorRTS()
+#     checkpoint = load_checkpoint("")
+#     agent = RogueNetAgent(checkpoint.agent.agent)
+#     # The `CliRunner` can run any environment with a command line interface.
+#     CliRunner(env,agent).run()    
