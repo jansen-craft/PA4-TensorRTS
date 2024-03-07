@@ -208,7 +208,7 @@ class TensorRTS(Environment):
         print(Fore.BLUE + Style.BRIGHT,end="")
         for i in range(len(self.tensors[0])):
             print(f"{self.tensors[0][i]}\t", end="")
-        print(f"{self.tensors[0][2]*self.tensors[0][2]+self.tensors[0][3]}\t", end="")
+        print(f"{self.tensors[0][3]*self.tensors[0][3]+self.tensors[0][2]}\t", end="")
         print(Fore.RESET+Style.RESET_ALL)
 
         print(Fore.RED + Style.BRIGHT,end="")
